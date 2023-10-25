@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:06:53 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/19 13:36:07 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/24 17:11:08 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ size_t	ft_strlen(const char *str)
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s3;
+	size_t	len;
 	size_t	i;
 	size_t	j;
 
-	if (!s1 && !s2)
-		return (0);
-	s3 = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	len = strlen(s1) + strlen(s2);
+	s3 = (char *)malloc(sizeof(char) * (len + 1));
 	if (s3 == NULL)
 		return (NULL);
 	i = 0;
@@ -62,10 +62,11 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	j = 0;
 	while (s2[j] != '\0')
 	{
-		s3[i + j] = s2[j];
+		s3[i] = s2[j];
+		i++;
 		j++;
 	}
-	s3[i + j] = '\0';
+	s3[len + 1] = '\0';
 	return (s3);
 }
 
@@ -73,7 +74,7 @@ char	*ft_calloc(size_t count, size_t size)
 {
 	char	*str;
 	size_t	i;
-	
+
 	str = (void *)malloc(count * size);
 	if (str == 0)
 		return (0);
