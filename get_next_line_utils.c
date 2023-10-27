@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:06:53 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/27 12:38:57 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:45:42 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_strchr(char *s, char c)
+unsigned int	ft_strchr(char *s, char c)
 {
-	int		i;
+	unsigned int		i;
 
 	if (s == NULL)
 		return (0);

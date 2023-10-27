@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:13:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/27 13:20:46 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:57:04 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,24 @@ static char	*ft_returnedline(char	*statik)
 {
 	char	*str;
 	int		i;
-	int		j;
 
 	i = 0;
-	if (!statik[i] && !statik)
+	if (!statik || !statik[i])
 		return (NULL);
-	while (statik[i] != '\n' && statik[i] != '\0')
+	while (statik[i] != '\n' && statik[i])
 		i++;
 	str = malloc(sizeof(char) * (i + (statik[i] == '\n') + 1));
 	if (str == NULL)
 		return (NULL);
-	j = 0;
-	while (j < i)
+	i = 0;
+	while (statik[i] != '\n' && statik[i])
 	{
-		str[j] = statik[j];
-		j++;
+		str[i] = statik[i];
+		i++;
 	}
-	if (statik[j] == '\n')
-		str[j++] = '\n';
-	str[j + 1] = '\0';
+	if (statik[i] == '\n')
+		str[i++] = '\n';
+	str[i] = '\0';
 	return (str);
 }
 
@@ -74,7 +73,7 @@ static char	*ft_leftovers(char	*statik)
 	i = 0;
 	while (statik[i] != '\n' && statik[i] != '\0')
 		i++;
-	if (statik[++i] == '\0')
+	if (statik[i++] == '\0')
 		return (free(statik), NULL);
 	aux = malloc(ft_strlen(statik + i) + 1);
 	if (aux == NULL)
@@ -121,12 +120,23 @@ int main(void)
 	fd = open("archivo.txt", O_RDONLY);
 	str = get_next_line(fd);
 	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
+	str = get_next_line(fd);
+	printf("%s", str);
 	while (str)
 	{
 		free(str);
 		str = get_next_line(fd);
 		printf("%s", str);
 	}
+	
 	close(fd);
 	return (0);
 }
