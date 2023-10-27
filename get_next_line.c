@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:13:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/24 18:29:46 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/27 13:20:46 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*ft_reading(int fd, char *statik)
 	while (!ft_strchr(statik, '\n') && charsreaded != 0)
 	{
 		charsreaded = read(fd, buffer, BUFFER_SIZE);
-		if ((charsreaded < 0) || (charsreaded == 0 && ft_strlen(statik) == 0))
+		if (charsreaded == -1)
 		{
 			free(buffer);
 			free(statik);
@@ -43,9 +43,9 @@ static char	*ft_returnedline(char	*statik)
 	int		i;
 	int		j;
 
-	if(statik[0] == '\0')
-		return (NULL);
 	i = 0;
+	if (!statik[i] && !statik)
+		return (NULL);
 	while (statik[i] != '\n' && statik[i] != '\0')
 		i++;
 	str = malloc(sizeof(char) * (i + (statik[i] == '\n') + 1));
@@ -57,13 +57,9 @@ static char	*ft_returnedline(char	*statik)
 		str[j] = statik[j];
 		j++;
 	}
-	if (statik[i] == '\n')
-	{
-		str[j] = '\n';
-		str[j + 1] = '\0';
-	}
-	else
-		str[j] = '\0';
+	if (statik[j] == '\n')
+		str[j++] = '\n';
+	str[j + 1] = '\0';
 	return (str);
 }
 
@@ -73,21 +69,20 @@ static char	*ft_leftovers(char	*statik)
 	int		i;
 	int		j;
 
+	if (statik == NULL)
+		return (NULL);
 	i = 0;
 	while (statik[i] != '\n' && statik[i] != '\0')
 		i++;
-	if (statik[i] == '\0')
-	{
-		free(statik);
-		return (NULL);
-	}
+	if (statik[++i] == '\0')
+		return (free(statik), NULL);
 	aux = malloc(ft_strlen(statik + i) + 1);
 	if (aux == NULL)
 		return (NULL);
 	j = 0;
 	while (statik[i] != '\0')
 	{
-		aux[j] = statik[i + 1];
+		aux[j] = statik[i];
 		i++;
 		j++;
 	}
@@ -103,22 +98,21 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (!statik)
+	{
+		statik = malloc(BUFFER_SIZE + 1);
+		if (statik == NULL)
+			return (NULL);
+	}
 	statik = ft_reading(fd, statik);
 	if (statik == NULL)
 		return (NULL);
 	line = ft_returnedline(statik);
-	if (line == NULL)
-		return (NULL);
 	statik = ft_leftovers(statik);
-	if (statik == NULL)
-	{
-		free(line);
-		free(statik);
-		return (NULL);
-	}
 	return (line);
 }
 
+/*
 int main(void)
 {
 	int	fd;
@@ -134,4 +128,6 @@ int main(void)
 		printf("%s", str);
 	}
 	close(fd);
+	return (0);
 }
+*/
