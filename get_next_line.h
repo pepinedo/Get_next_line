@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:14:09 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/27 13:53:33 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/30 10:52:25 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 2
+#  define BUFFER_SIZE 1
 # endif
 
 size_t			ft_strlen(const char *str);

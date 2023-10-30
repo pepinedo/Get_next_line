@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 13:06:53 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/27 13:45:42 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:14:35 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	s3 = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (s3 == NULL)
-		return (NULL);
+		return (free(s1), NULL);
 	i = -1;
 	while (s1[++i])
 		s3[i] = s1[i];

@@ -6,7 +6,7 @@
 /*   By: ppinedo- <ppinedo-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 11:13:11 by ppinedo-          #+#    #+#             */
-/*   Updated: 2023/10/27 13:57:04 by ppinedo-         ###   ########.fr       */
+/*   Updated: 2023/10/30 11:16:57 by ppinedo-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ static char	*ft_returnedline(char	*statik)
 	char	*str;
 	int		i;
 
-	i = 0;
-	if (!statik || !statik[i])
+	if (statik[0] == '\0')
 		return (NULL);
-	while (statik[i] != '\n' && statik[i])
+	i = 0;
+	while (statik[i] != '\n' && statik[i] != '\0')
 		i++;
-	str = malloc(sizeof(char) * (i + (statik[i] == '\n') + 1));
+	str = malloc(sizeof(char) * ((i + 1) + (statik[i] == '\n')));
 	if (str == NULL)
-		return (NULL);
+		return (free(statik), NULL);
 	i = 0;
-	while (statik[i] != '\n' && statik[i])
+	while (statik[i] != '\n' && statik[i] != '\0')
 	{
 		str[i] = statik[i];
 		i++;
@@ -68,8 +68,6 @@ static char	*ft_leftovers(char	*statik)
 	int		i;
 	int		j;
 
-	if (statik == NULL)
-		return (NULL);
 	i = 0;
 	while (statik[i] != '\n' && statik[i] != '\0')
 		i++;
@@ -97,12 +95,6 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!statik)
-	{
-		statik = malloc(BUFFER_SIZE + 1);
-		if (statik == NULL)
-			return (NULL);
-	}
 	statik = ft_reading(fd, statik);
 	if (statik == NULL)
 		return (NULL);
@@ -119,15 +111,27 @@ int main(void)
 	
 	fd = open("archivo.txt", O_RDONLY);
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
 	str = get_next_line(fd);
-	printf("%s", str);
+	printf("%s\n", str);
+	str = get_next_line(fd);
+	printf("%s\n", str);
+	str = get_next_line(fd);
+	printf("%s\n", str);
+	close(fd);
+	return (0);
+}
+*/
+/*
+int main(void)
+{
+	fd = open("archivo.txt", O_RDONLY);
 	str = get_next_line(fd);
 	printf("%s", str);
 	while (str)
@@ -136,7 +140,6 @@ int main(void)
 		str = get_next_line(fd);
 		printf("%s", str);
 	}
-	
 	close(fd);
 	return (0);
 }
